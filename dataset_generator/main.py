@@ -1,6 +1,3 @@
-# import tkinter as tk
-# from tkinter import ttk
-# from tkinter import filedialog
 from datetime import datetime, timedelta
 import random
 import string
@@ -26,24 +23,53 @@ def get_season(date) -> str:
 
 def generate_data():
     status_label.configure(text=f"В процессе...", text_color="yellow")
+    N = N_entry.get()
+    str_begin_date = begin_date_entry.get()
+    str_end_date = end_date_entry.get()
+    multiplier = multiplier_entry.get()
+
     try:
-        N = N_entry.get()
+        temp_var = int(N)
+        N_entry.configure(fg_color=default_fg)
+    except:
+        if N == "": N_entry.configure(fg_color=default_fg)
+        else: N_entry.configure(fg_color="red")
+
+    try:
+        temp_str = datetime.strptime(str_begin_date, '%d.%m.%Y')
+        begin_date_entry.configure(fg_color=default_fg)
+    except:
+        if str_begin_date == "": begin_date_entry.configure(fg_color=default_fg)
+        else: begin_date_entry.configure(fg_color="red")
+
+    try:
+        temp_str = datetime.strptime(str_end_date, '%d.%m.%Y')
+        end_date_entry.configure(fg_color=default_fg)
+    except:
+        if str_end_date == "": end_date_entry.configure(fg_color=default_fg)
+        else: end_date_entry.configure(fg_color="red")
+
+    try:
+        temp_var = int(multiplier)
+        multiplier_entry.configure(fg_color=default_fg)
+    except:
+        if multiplier == "": multiplier_entry.configure(fg_color=default_fg)
+        else: multiplier_entry.configure(fg_color="red")
+
+    try:
         if N != "": N = int(N)
         else: N = 100
 
-        str_begin_date = begin_date_entry.get()
         if str_begin_date != "": begin_date = datetime.strptime(str_begin_date, '%d.%m.%Y')
         else:
             str_begin_date = "01.01.2000"
             begin_date = datetime.strptime(str_begin_date, '%d.%m.%Y')
 
-        str_end_date = end_date_entry.get()
         if str_end_date != "": end_date = datetime.strptime(str_end_date, '%d.%m.%Y')
         else:
             str_end_date = "31.12.2020"
             end_date = datetime.strptime(str_end_date, '%d.%m.%Y')
 
-        multiplier = multiplier_entry.get()
         if multiplier != "": multiplier = int(multiplier)
         else: multiplier = random.randint(20, 360)
 
@@ -161,6 +187,8 @@ if __name__ == '__main__':
     # Create the main window
     window = ctk.CTk()
     window.title("Ad Data Generator")
+    window.resizable(False, False)
+    window.geometry("410x270+700+340")
 
     # Create and place GUI components
     N_label = ctk.CTkLabel(window, text="Количество строк:", )
@@ -168,12 +196,13 @@ if __name__ == '__main__':
     N_entry = ctk.CTkEntry(window, placeholder_text="100")
     N_entry.grid(column=1, row=0, padx=10, pady=5)
 
-    begin_date_label = ctk.CTkLabel(window, text="Дата начала (дд.мм.гггг):")
+    begin_date_label = ctk.CTkLabel(window, text="Дата начала:")
     begin_date_label.grid(column=0, row=1, padx=10, pady=5)
     begin_date_entry = ctk.CTkEntry(window, placeholder_text="01.01.2000")
+    default_fg = begin_date_entry.cget("fg_color")
     begin_date_entry.grid(column=1, row=1, padx=10, pady=5)
 
-    end_date_label = ctk.CTkLabel(window, text="Дата конца (дд.мм.гггг):")
+    end_date_label = ctk.CTkLabel(window, text="Дата конца:")
     end_date_label.grid(column=0, row=2, padx=10, pady=5)
     end_date_entry = ctk.CTkEntry(window, placeholder_text="31.12.2020")
     end_date_entry.grid(column=1, row=2, padx=10, pady=5)
