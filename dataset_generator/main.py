@@ -8,7 +8,7 @@ import customtkinter as ctk
 from customtkinter import filedialog
 
 ctk.set_appearance_mode("System")
-ctk.set_default_color_theme("blue") # Themes: "blue", "green", "dark-blue"
+ctk.set_default_color_theme("blue")
 
 def generate_alphanum_random_string(length) -> str:
     letters_and_digits = string.ascii_lowercase + string.digits
